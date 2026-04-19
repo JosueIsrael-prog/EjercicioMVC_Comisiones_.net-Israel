@@ -30,7 +30,7 @@ public class ComisionesController : ControllerBase
         var reglas = await _context.Reglas.AsNoTracking().ToListAsync();
 
         var resultado = ventas
-            .GroupBy(v => v.Vendedor)
+            .GroupBy(v => v.Vendedor?.Nombre ?? "Desconocido")
             .Select(g => {
                 var total = g.Sum(v => v.Monto);
                 var regla = reglas
@@ -39,7 +39,7 @@ public class ComisionesController : ControllerBase
                     .FirstOrDefault();
                     
                 return new {
-                    Vendedor = g.Key?.Nombre ?? "Desconocido",
+                    Vendedor = g.Key,
                     TotalVentas = total,
                     Comision = regla != null ? total * regla.Porcentaje : 0
                 };
