@@ -1,0 +1,14 @@
+# Dependencias
+node_modules/
+bin/
+obj/
+
+# Archivos de build y entorno
+frontend/dist/
+.env
+
+# Misceláneos
+.vscode/
+.vs/
+*.suo
+*.user

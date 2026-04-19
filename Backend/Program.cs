@@ -37,7 +37,15 @@ if (app.Environment.IsDevelopment())
 app.UseCors("ReactPolicy");
 
 app.UseHttpsRedirection();
+
+// Configuraciones indispensables para servir React compilado desde wwwroot
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.MapControllers();
+
+// Enviar todas las peticiones no resueltas (rutas frontend) a React
+app.MapFallbackToFile("index.html");
 
 var summaries = new[]
 {
