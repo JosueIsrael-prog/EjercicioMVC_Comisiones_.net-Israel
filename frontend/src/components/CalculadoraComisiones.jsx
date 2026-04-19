@@ -18,7 +18,7 @@ export default function CalculadoraComisiones() {
     setError(null);
 
     try {
-      // Puerto HTTP del backend (5172) configurado en el launchSettings.json
+      // Petición HTTP GET al endpoint de comisiones
       const response = await fetch(
         `http://localhost:5172/api/Comisiones?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`
       );
@@ -83,7 +83,7 @@ export default function CalculadoraComisiones() {
             )}
             {resultados.map((res, index) => (
               <tr key={index}>
-                {/* Los nombres deben coincidir con las propiedades del JSON (vendedor, totalVentas, comision) */}
+                {/* Mapeo de datos del reporte */}
                 <td>{res.vendedor}</td>
                 <td>${res.totalVentas?.toFixed(2)}</td>
                 <td>${res.comision?.toFixed(2)}</td>

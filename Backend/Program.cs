@@ -11,7 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddControllers();
 
-// Configuración de CORS para el frontend React
+// Configuración de política de CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("ReactPolicy", builder =>
@@ -38,13 +38,13 @@ app.UseCors("ReactPolicy");
 
 app.UseHttpsRedirection();
 
-// Configuraciones indispensables para servir React compilado desde wwwroot
+// Provisión de middleware para archivos estáticos de SPA React
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
 app.MapControllers();
 
-// Enviar todas las peticiones no resueltas (rutas frontend) a React
+// Redirección de rutas no mapeadas hacia el punto de entrada de la SPA
 app.MapFallbackToFile("index.html");
 
 var summaries = new[]

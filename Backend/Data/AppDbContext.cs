@@ -18,7 +18,7 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // Mapeo explicito de tablas para que en Supabase se llamen igual que las clases
+        // Mapeo explícito de entidades al modelo relacional
         modelBuilder.Entity<Regla>().ToTable("Regla");
         modelBuilder.Entity<Vendedor>().ToTable("Vendedor");
         modelBuilder.Entity<Venta>().ToTable("Venta");
@@ -29,7 +29,7 @@ public class AppDbContext : DbContext
             .WithMany(v => v.Ventas)
             .HasForeignKey(v => v.VendedorId);
 
-        // Seeding Data
+        // Seeding Data (Inicialización de datos maestros)
         modelBuilder.Entity<Regla>().HasData(
             new Regla { Id = 1, Porcentaje = 0.06m, MontoMinimo = 0.00m },
             new Regla { Id = 2, Porcentaje = 0.08m, MontoMinimo = 500.00m },
@@ -44,12 +44,12 @@ public class AppDbContext : DbContext
         );
 
         modelBuilder.Entity<Venta>().HasData(
-            // Juan Perez suma más de 1000
+            // Caso de prueba: Ventas con sumatoria superior a $1000
             new Venta { Id = 1, VendedorId = 1, Monto = 500.00m, FechaVenta = new DateTime(2025, 5, 10, 0, 0, 0, DateTimeKind.Utc) },
             new Venta { Id = 2, VendedorId = 1, Monto = 600.00m, FechaVenta = new DateTime(2025, 5, 15, 0, 0, 0, DateTimeKind.Utc) },
-            // Maria Garcia
+            // Casos de prueba estándar
             new Venta { Id = 3, VendedorId = 2, Monto = 600.00m, FechaVenta = new DateTime(2026, 6, 1, 0, 0, 0, DateTimeKind.Utc) },
-            // Carlos Lopez
+            // Casos de prueba múltiples
             new Venta { Id = 4, VendedorId = 3, Monto = 200.00m, FechaVenta = new DateTime(2026, 5, 20, 0, 0, 0, DateTimeKind.Utc) },
             new Venta { Id = 5, VendedorId = 3, Monto = 100.00m, FechaVenta = new DateTime(2026, 6, 2, 0, 0, 0, DateTimeKind.Utc) }
         );
