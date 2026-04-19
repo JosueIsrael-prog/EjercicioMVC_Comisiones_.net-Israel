@@ -20,7 +20,7 @@ export default function CalculadoraComisiones() {
     try {
       // Petición HTTP GET al endpoint de comisiones
       const response = await fetch(
-        `http://localhost:5172/api/Comisiones?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`
+        `/api/Comisiones?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`
       );
       
       if (!response.ok) {

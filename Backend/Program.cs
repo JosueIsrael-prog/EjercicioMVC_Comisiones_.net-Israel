@@ -23,8 +23,11 @@ builder.Services.AddCors(options =>
 });
 
 // Configuración de Entity Framework Core con Npgsql (PostgreSQL / Supabase)
+var connectionString = Environment.GetEnvironmentVariable("SupabaseConnection") 
+                    ?? builder.Configuration.GetConnectionString("SupabaseConnection");
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("SupabaseConnection")));
+    options.UseNpgsql(connectionString));
 
 var app = builder.Build();
 
