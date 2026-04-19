@@ -22,11 +22,12 @@ public class ComisionesController : ControllerBase
         fechaFin = DateTime.SpecifyKind(fechaFin, DateTimeKind.Utc);
 
         var ventas = await _context.Ventas
+            .AsNoTracking()
             .Include(v => v.Vendedor)
             .Where(v => v.FechaVenta >= fechaInicio && v.FechaVenta <= fechaFin)
             .ToListAsync();
             
-        var reglas = await _context.Reglas.ToListAsync();
+        var reglas = await _context.Reglas.AsNoTracking().ToListAsync();
 
         var resultado = ventas
             .GroupBy(v => v.Vendedor)
