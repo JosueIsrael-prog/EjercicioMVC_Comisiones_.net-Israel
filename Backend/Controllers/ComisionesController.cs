@@ -18,6 +18,9 @@ public class ComisionesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetComisiones(DateTime fechaInicio, DateTime fechaFin)
     {
+        fechaInicio = DateTime.SpecifyKind(fechaInicio, DateTimeKind.Utc);
+        fechaFin = DateTime.SpecifyKind(fechaFin, DateTimeKind.Utc);
+
         var ventas = await _context.Ventas
             .Include(v => v.Vendedor)
             .Where(v => v.FechaVenta >= fechaInicio && v.FechaVenta <= fechaFin)
