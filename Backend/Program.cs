@@ -9,6 +9,17 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddControllers();
 
+// Configuración de CORS para el frontend React
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("ReactPolicy", builder =>
+    {
+        builder.WithOrigins("http://localhost:5173")
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
+
 // Configuración de Entity Framework Core con Npgsql (PostgreSQL / Supabase)
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("SupabaseConnection")));
@@ -20,6 +31,8 @@ if (app.Environment.IsDevelopment())
 {
     // Swagger configs will go here if needed
 }
+
+app.UseCors("ReactPolicy");
 
 app.UseHttpsRedirection();
 app.MapControllers();
